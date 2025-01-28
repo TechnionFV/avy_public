@@ -1,0 +1,16 @@
+aig 11 1 4 0 6 1
+13 1
+2
+18
+1
+22
+i0 AIGER_NEXT_b
+l0 a
+l1 b
+l2 AIGER_VALID
+l3 AIGER_INITIALIZED
+b0 AIGER_NEVER_0
+c
+smvtoaig
+1.9
+examples/smv/latch1.smv

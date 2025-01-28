@@ -1,0 +1,8 @@
+## RUN
+## 
+./brunch.py --out out --cpu 20 --mem 2048 --format base:Cpu:Status:Depth:Frame:doBmc:doPdrTrace:getInterpolant:run.loop:Aig_ManSimplifyComb:File /ag/hwmcc/12/single/*.aig -- ../build/src/main --avy=1 {f}
+
+## Output is placed in the current directory under out.DATE
+## out.DATE/stats is a CSV file with the summary of the results
+## for each input file F
+##    out.DATE/F.stdout and out.DATE/F.stderr are the captured stdout and stderr 
