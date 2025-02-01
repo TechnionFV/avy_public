@@ -19,13 +19,16 @@ class MinimizerReplay : public DRUP2ITP::ItpClauseIterator {
   DRUP2ITP::Drup2Itp m_tracer;
 
 public:
-  MinimizerReplay(bool preprocessing, bool inprocessing) : m_solver() {
+  MinimizerReplay(int vars, bool preprocessing, bool inprocessing) : m_solver() {
     bool configured = m_solver.configure("unsat");
-    configured &= m_solver.configure("plain");
+    if (!preprocessing)
+      configured &= m_solver.configure("plain");
     assert (configured);
     m_solver.set("inprocessing", inprocessing);
     m_tracer.connect_to(m_solver);
     m_tracer.set_current_partition(1);
+    m_tracer.resize(vars);
+    m_solver.reserve(vars);
   }
 
   ~MinimizerReplay() { m_solver.disconnect_proof_tracer(&m_tracer); }

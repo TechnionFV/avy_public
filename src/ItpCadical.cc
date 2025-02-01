@@ -38,9 +38,10 @@ Aig_Man_t *ItpCadical::getInterpolant(int bad,
   }
 
   if (gParams.cadical_itp_minimize) {
-    MinimizerReplay minimizer(gParams.cadical_itp_minimizer_preprocessing, gParams.cadical_itp_minimizer_inprocessing);
+    const auto vars = m_pSat->vars();
+    MinimizerReplay minimizer(vars, gParams.cadical_itp_minimizer_preprocessing, gParams.cadical_itp_minimizer_inprocessing);
     DRUP2ITP::MiniTracer mini_tracer = minimizer.mini_tracer();
-    CadicalItpSeq proof_it(m_pSat->vars(), nNumOfVars, vVarToId, m_nParts - 1,
+    CadicalItpSeq proof_it(vars, nNumOfVars, vVarToId, m_nParts - 1,
                            m_Assumptions, mini_tracer);
     AVY_VERIFY(m_tracer->trim(&minimizer, true /* undo */));
     minimizer.replay(proof_it);
@@ -53,6 +54,8 @@ Aig_Man_t *ItpCadical::getInterpolant(int bad,
 
     VERBOSE(2, Aig_ManPrintStats(pMan););
     LOG("itp_verbose", logs() << *pMan << "\n";);
+    std::string vv(m_pSat->version());
+    LOG("CADICAL-VERSION", logs() << vv.c_str() << "\n";);
     // Release memory
     // Sto_ManFree( pSatCnf );
     return pMan;
